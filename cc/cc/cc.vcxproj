@@ -51,8 +51,9 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)tinyxml2;$(ProjectDir)zlib;$(ProjectDir)base64;$(ProjectDir)TmxParser;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -78,7 +79,68 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="base64\base64.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="tinyxml2\tinyxml2.cpp" />
+    <ClCompile Include="TmxParser\TmxEllipse.cpp" />
+    <ClCompile Include="TmxParser\TmxImage.cpp" />
+    <ClCompile Include="TmxParser\TmxImageLayer.cpp" />
+    <ClCompile Include="TmxParser\TmxLayer.cpp" />
+    <ClCompile Include="TmxParser\TmxMap.cpp" />
+    <ClCompile Include="TmxParser\TmxObject.cpp" />
+    <ClCompile Include="TmxParser\TmxObjectGroup.cpp" />
+    <ClCompile Include="TmxParser\TmxPolygon.cpp" />
+    <ClCompile Include="TmxParser\TmxPolyline.cpp" />
+    <ClCompile Include="TmxParser\TmxPropertySet.cpp" />
+    <ClCompile Include="TmxParser\TmxTile.cpp" />
+    <ClCompile Include="TmxParser\TmxTileset.cpp" />
+    <ClCompile Include="TmxParser\TmxUtil.cpp" />
+    <ClCompile Include="zlib\adler32.c" />
+    <ClCompile Include="zlib\compress.c" />
+    <ClCompile Include="zlib\crc32.c" />
+    <ClCompile Include="zlib\deflate.c" />
+    <ClCompile Include="zlib\gzclose.c" />
+    <ClCompile Include="zlib\gzlib.c" />
+    <ClCompile Include="zlib\gzread.c" />
+    <ClCompile Include="zlib\gzwrite.c" />
+    <ClCompile Include="zlib\infback.c" />
+    <ClCompile Include="zlib\inffast.c" />
+    <ClCompile Include="zlib\inflate.c" />
+    <ClCompile Include="zlib\inftrees.c" />
+    <ClCompile Include="zlib\trees.c" />
+    <ClCompile Include="zlib\uncompr.c" />
+    <ClCompile Include="zlib\zutil.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="base64\base64.h" />
+    <ClInclude Include="tinyxml2\tinyxml2.h" />
+    <ClInclude Include="TmxParser\Tmx.h" />
+    <ClInclude Include="TmxParser\TmxEllipse.h" />
+    <ClInclude Include="TmxParser\TmxImage.h" />
+    <ClInclude Include="TmxParser\TmxImageLayer.h" />
+    <ClInclude Include="TmxParser\TmxLayer.h" />
+    <ClInclude Include="TmxParser\TmxMap.h" />
+    <ClInclude Include="TmxParser\TmxMapTile.h" />
+    <ClInclude Include="TmxParser\TmxObject.h" />
+    <ClInclude Include="TmxParser\TmxObjectGroup.h" />
+    <ClInclude Include="TmxParser\TmxPoint.h" />
+    <ClInclude Include="TmxParser\TmxPolygon.h" />
+    <ClInclude Include="TmxParser\TmxPolyline.h" />
+    <ClInclude Include="TmxParser\TmxPropertySet.h" />
+    <ClInclude Include="TmxParser\TmxTile.h" />
+    <ClInclude Include="TmxParser\TmxTileset.h" />
+    <ClInclude Include="TmxParser\TmxUtil.h" />
+    <ClInclude Include="zlib\crc32.h" />
+    <ClInclude Include="zlib\deflate.h" />
+    <ClInclude Include="zlib\gzguts.h" />
+    <ClInclude Include="zlib\inffast.h" />
+    <ClInclude Include="zlib\inffixed.h" />
+    <ClInclude Include="zlib\inflate.h" />
+    <ClInclude Include="zlib\inftrees.h" />
+    <ClInclude Include="zlib\trees.h" />
+    <ClInclude Include="zlib\zconf.h" />
+    <ClInclude Include="zlib\zlib.h" />
+    <ClInclude Include="zlib\zutil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
