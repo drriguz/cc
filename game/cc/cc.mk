@@ -5,15 +5,15 @@
 ## Debug
 ProjectName            :=cc
 ConfigurationName      :=Debug
-WorkspacePath          :=/home/riguz/workspace/game
-ProjectPath            :=/home/riguz/workspace/game/cc
+WorkspacePath          :=/home/riguz/workspace/cc/game
+ProjectPath            :=/home/riguz/workspace/cc/game/cc
 IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=riguz
-Date                   :=14/03/17
+Date                   :=15/03/17
 CodeLitePath           :=/home/riguz/.codelite
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -60,7 +60,7 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_game.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_point.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_object.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_map.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_texture.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_game.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_object.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_map.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_texture.cpp$(ObjectSuffix) 
 
 
 
@@ -92,7 +92,7 @@ PreBuild:
 ## Objects
 ##
 $(IntermediateDirectory)/main.cpp$(ObjectSuffix): main.cpp $(IntermediateDirectory)/main.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/game/cc/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/cc/game/cc/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/main.cpp$(DependSuffix): main.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/main.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/main.cpp$(DependSuffix) -MM main.cpp
 
@@ -100,23 +100,15 @@ $(IntermediateDirectory)/main.cpp$(PreprocessSuffix): main.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/main.cpp$(PreprocessSuffix) main.cpp
 
 $(IntermediateDirectory)/src_game.cpp$(ObjectSuffix): src/game.cpp $(IntermediateDirectory)/src_game.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/game/cc/src/game.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_game.cpp$(ObjectSuffix) $(IncludePath)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/cc/game/cc/src/game.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_game.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/src_game.cpp$(DependSuffix): src/game.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_game.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_game.cpp$(DependSuffix) -MM src/game.cpp
 
 $(IntermediateDirectory)/src_game.cpp$(PreprocessSuffix): src/game.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_game.cpp$(PreprocessSuffix) src/game.cpp
 
-$(IntermediateDirectory)/src_point.cpp$(ObjectSuffix): src/point.cpp $(IntermediateDirectory)/src_point.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/game/cc/src/point.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_point.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/src_point.cpp$(DependSuffix): src/point.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_point.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_point.cpp$(DependSuffix) -MM src/point.cpp
-
-$(IntermediateDirectory)/src_point.cpp$(PreprocessSuffix): src/point.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_point.cpp$(PreprocessSuffix) src/point.cpp
-
 $(IntermediateDirectory)/src_object.cpp$(ObjectSuffix): src/object.cpp $(IntermediateDirectory)/src_object.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/game/cc/src/object.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_object.cpp$(ObjectSuffix) $(IncludePath)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/cc/game/cc/src/object.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_object.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/src_object.cpp$(DependSuffix): src/object.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_object.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_object.cpp$(DependSuffix) -MM src/object.cpp
 
@@ -124,7 +116,7 @@ $(IntermediateDirectory)/src_object.cpp$(PreprocessSuffix): src/object.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_object.cpp$(PreprocessSuffix) src/object.cpp
 
 $(IntermediateDirectory)/src_map.cpp$(ObjectSuffix): src/map.cpp $(IntermediateDirectory)/src_map.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/game/cc/src/map.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_map.cpp$(ObjectSuffix) $(IncludePath)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/cc/game/cc/src/map.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_map.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/src_map.cpp$(DependSuffix): src/map.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_map.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_map.cpp$(DependSuffix) -MM src/map.cpp
 
@@ -132,7 +124,7 @@ $(IntermediateDirectory)/src_map.cpp$(PreprocessSuffix): src/map.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_map.cpp$(PreprocessSuffix) src/map.cpp
 
 $(IntermediateDirectory)/src_texture.cpp$(ObjectSuffix): src/texture.cpp $(IntermediateDirectory)/src_texture.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/game/cc/src/texture.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_texture.cpp$(ObjectSuffix) $(IncludePath)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/cc/game/cc/src/texture.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_texture.cpp$(ObjectSuffix) $(IncludePath)
 $(IntermediateDirectory)/src_texture.cpp$(DependSuffix): src/texture.cpp
 	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_texture.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_texture.cpp$(DependSuffix) -MM src/texture.cpp
 

@@ -1,1 +1,1 @@
-./Debug/main.cpp.o ./Debug/src_game.cpp.o ./Debug/src_point.cpp.o ./Debug/src_object.cpp.o ./Debug/src_map.cpp.o ./Debug/src_texture.cpp.o
+./Debug/main.cpp.o ./Debug/src_game.cpp.o ./Debug/src_object.cpp.o ./Debug/src_map.cpp.o ./Debug/src_texture.cpp.o

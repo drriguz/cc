@@ -6,13 +6,14 @@
 #include <SDL2/SDL.h>
 
 #include "point.h"
+#include "camera.h"
 
 namespace cc
 {
 class Object
 {
 public:
-    Object(const std::string& name);
+    Object(const std::string& name, SDL_Renderer* renderer);
     virtual ~Object();
 
 public:
@@ -21,18 +22,20 @@ public:
     static void applyAdd();
     static void removeDead();
     static void removeAll();
-    static void renderObjects(SDL_Renderer* renderer);
+    static void renderObjects(const Camera& camera);
 
 public:
     virtual void remove();
     virtual void update(float deltaTime);
-    virtual void render(SDL_Renderer* renderer) = 0;
+    virtual void render(const Camera& camera) = 0;
 
-    protected:
-std::string _name;
+protected:
+    std::string _name;
     bool _dead;
     float _speed;
     Point _position;
+
+    SDL_Renderer* _renderer;
 };
 };
 #endif

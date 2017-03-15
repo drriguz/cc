@@ -14,6 +14,8 @@ cc::Game::Game(const std::string& name, int width, int height)
     , _renderer(NULL)
     , _font(NULL)
     , _quit(false)
+    , _camera(Camera(width, height, 1.0f))
+    , _map(NULL)
 {
     this->init();
     this->loadMedia();
@@ -22,6 +24,10 @@ cc::Game::Game(const std::string& name, int width, int height)
 cc::Game::~Game()
 {
     this->deinit();
+    if(this->_map != NULL) {
+        delete this->_map;
+        this->_map = NULL;
+    }
 }
 
 void cc::Game::init()
@@ -77,16 +83,30 @@ void cc::Game::deinit()
 
 void cc::Game::loadMedia()
 {
+    this->_map = new cc::Map("2d.tmx", this->_renderer);
 }
 
 void cc::Game::handleEvents()
 {
     SDL_Event e;
+    int cameraSpeed = 5;
     while(SDL_PollEvent(&e) != 0) {
         if(e.type == SDL_QUIT)
             this->_quit = true;
         else if(e.type == SDL_KEYDOWN) {
             switch(e.key.keysym.sym) {
+            case SDLK_LEFT:
+                this->moveCamera(cameraSpeed, 0);
+                break;
+            case SDLK_RIGHT:
+                this->moveCamera(-cameraSpeed, 0);
+                break;
+            case SDLK_UP:
+                this->moveCamera(0, cameraSpeed);
+                break;
+            case SDLK_DOWN:
+                this->moveCamera(0, -cameraSpeed);
+                break;
             default:
                 break;
             }
@@ -102,8 +122,8 @@ void cc::Game::render()
 {
     SDL_SetRenderDrawColor(this->_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     SDL_RenderClear(this->_renderer);
-    
-    cc::Object::renderObjects(this->_renderer);
+
+    cc::Object::renderObjects(this->_camera);
     SDL_RenderPresent(this->_renderer);
 }
 
@@ -126,4 +146,12 @@ SDL_Renderer* cc::Game::getRenderer()
 TTF_Font* cc::Game::getFont()
 {
     return this->_font;
+}
+const cc::Camera& cc::Game::getCamera() const
+{
+    return this->_camera;
+}
+void cc::Game::moveCamera(int x, int y)
+{
+    this->_camera.move(Point(x, y));
 }

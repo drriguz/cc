@@ -3,9 +3,8 @@
 #include "logger.h"
 
 cc::Map::Map(const std::string& path, SDL_Renderer* renderer)
-    : cc::Object("")
+    : cc::Object("", renderer)
     , _path(path)
-    , _renderer(renderer)
 {
     this->_map.ParseFile(this->_path);
     if(this->_map.HasError())
@@ -35,23 +34,23 @@ void cc::Map::loadMedia()
     }
 }
 
-void cc::Map::render(SDL_Renderer* renderer)
+void cc::Map::render(const cc::Camera& camera)
 {
     std::vector<Tmx::Layer*> layers = this->_map.GetLayers();
     for(std::vector<Tmx::Layer*>::iterator iter = layers.begin(); iter != layers.end(); ++iter) {
         Tmx::Layer* layer = (*iter);
         if(layer->IsVisible())
-            this->drawLayer(renderer, layer);
+            this->drawLayer(layer, camera);
     }
 }
-void cc::Map::drawLayer(SDL_Renderer* renderer, Tmx::Layer* layer)
+void cc::Map::drawLayer(Tmx::Layer* layer, const cc::Camera& camera)
 {
     if(layer->GetLayerType() == Tmx::LayerType::TMX_LAYERTYPE_TILE)
-        this->drawTileLayer(renderer, (Tmx::TileLayer*)layer);
+        this->drawTileLayer((Tmx::TileLayer*)layer, camera);
 }
-void cc::Map::drawTileLayer(SDL_Renderer* renderer, Tmx::TileLayer* layer)
+void cc::Map::drawTileLayer(Tmx::TileLayer* layer, const cc::Camera& camera)
 {
-    SDL_Rect srcRect;
+    SDL_Rect srcRect, destRect;
     for(int x = 0; x < layer->GetWidth(); x++) {
         for(int y = 0; y < layer->GetHeight(); y++) {
             Tmx::MapTile tile = layer->GetTile(x, y);
@@ -60,15 +59,16 @@ void cc::Map::drawTileLayer(SDL_Renderer* renderer, Tmx::TileLayer* layer)
                 cc::Texture* texture = this->_mapTilesets.at(tile.tilesetId);
                 const Tmx::Tileset* tileset = this->_map.GetTileset(tile.tilesetId);
                 int tileIndex = tile.gid - tileset->GetFirstGid();
-                int xxx = tileset->GetTileCount();
+                // TODO: if map version < 0.15 then GetColumns() returns 0
                 int tileX = tileIndex % tileset->GetColumns(), tileY = tileIndex / tileset->GetColumns();
                 srcRect.x = tileset->GetTileWidth() * tileX;
                 srcRect.y = tileset->GetTileHeight() * tileY;
                 srcRect.w = tileset->GetTileWidth();
                 srcRect.h = tileset->GetTileHeight();
-                int destX = this->_map.GetTileWidth() * x;
-                int destY = this->_map.GetTileHeight() * y;
-                texture->render(destX, destY, &srcRect);
+                destRect.x = this->_map.GetTileWidth() * x;
+                destRect.y = this->_map.GetTileHeight() * y;
+                camera.apply(srcRect, &destRect);
+                texture->render(srcRect, destRect);
             }
         }
     }

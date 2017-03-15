@@ -3,11 +3,12 @@
 std::vector<cc::Object*> cc::Object::objects;
 std::vector<cc::Object*> cc::Object::addedObjects;
 
-cc::Object::Object(const std::string& name)
+cc::Object::Object(const std::string& name, SDL_Renderer* renderer)
     : _name(name)
     , _dead(false)
     , _speed(0)
     , _position(cc::Point())
+    , _renderer(renderer)
 {
     cc::Object::objects.push_back(this);
 }
@@ -49,10 +50,10 @@ void cc::Object::removeAll()
     }
 }
 
-void cc::Object::renderObjects(SDL_Renderer* renderer)
+void cc::Object::renderObjects(const cc::Camera& camera)
 {
     for(std::vector<cc::Object*>::iterator iter = objects.begin(); iter != objects.end(); ++iter)
-        (*iter)->render(renderer);
+        (*iter)->render(camera);
 }
 
 void cc::Object::remove()

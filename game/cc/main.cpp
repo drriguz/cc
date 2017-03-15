@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 
     try {
         cc::Game game("hello", 640, 480);
-        cc::Map tmx("2d-simple.tmx", game.getRenderer());        
+        
         game.execute();
     } catch(cc::Exception ex) {
         cc::Logger::error(ex.getError().c_str());

@@ -27,6 +27,7 @@ public:
                 double angle = 0.0,
                 SDL_Point* center = NULL,
                 SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void render(const SDL_Rect& src, const SDL_Rect& dest);
     int getWidth();
     int getHeight();
 

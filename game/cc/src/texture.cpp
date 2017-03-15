@@ -106,3 +106,7 @@ int cc::Texture::getHeight()
 {
     return this->_height;
 }
+void cc::Texture::render(const SDL_Rect& src, const SDL_Rect& dest)
+{
+    SDL_RenderCopy(_renderer, _texture, &src, &dest);
+}

@@ -17,12 +17,12 @@
       <File Name="src/cc.h"/>
       <File Name="src/object.h"/>
       <File Name="src/point.h"/>
-      <File Name="src/point.cpp"/>
       <File Name="src/object.cpp"/>
       <File Name="src/map.h"/>
       <File Name="src/map.cpp"/>
       <File Name="src/texture.h"/>
       <File Name="src/texture.cpp"/>
+      <File Name="src/camera.h"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <Settings Type="Executable">

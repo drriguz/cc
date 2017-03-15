@@ -1,6 +1,7 @@
 #Debug and Release
 Debug
 Release
+.codelite
 
 #Vs files
 *.opensdf

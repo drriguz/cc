@@ -19,21 +19,16 @@ public:
     ~Map();
 
 public:
-    virtual void render(SDL_Renderer* renderer);
+    virtual void render(const Camera& camera);
 
 protected:
-    //static void drawPolyLine(SDL_Renderer* renderer, float* points[], int pointCount, int x, int y);
-    //static void drawPolygon(SDL_Renderer* renderer, float* points[], int pointCount, int x, int y);
-    //void drawObjects(SDL_renderer* renderer);
     void loadMedia();
-    void drawLayer(SDL_Renderer* renderer, Tmx::Layer* layer);
-    void drawTileLayer(SDL_Renderer* renderer, Tmx::TileLayer* layer);
+    void drawLayer(Tmx::Layer* layer, const Camera& camera);
+    void drawTileLayer(Tmx::TileLayer* layer, const Camera& camera);
 protected:
     std::string _path;
     Tmx::Map _map;
     std::vector<Texture*> _mapTilesets;
-    
-    SDL_Renderer* _renderer;
 };
 };
 #endif
