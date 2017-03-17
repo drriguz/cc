@@ -13,6 +13,11 @@ public:
         , _y(y)
     {
     }
+    Point(const Point& p)
+    {
+        this->_x = p._x;
+        this->_y = p._y;
+    }
     ~Point(){};
 
 public:

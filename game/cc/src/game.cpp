@@ -43,6 +43,7 @@ void cc::Game::init(bool fullScreen)
     if(_window == NULL)
         throw Exception("Window could not be created:", SDL_GetError());
 
+    //_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED);
     _renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if(_renderer == NULL)
         throw Exception("Renderer could not be created:", SDL_GetError());
@@ -76,14 +77,14 @@ void cc::Game::deinit()
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
-    
+
     cc::Logger::log("Game deinited!");
 }
 
 void cc::Game::loadMedia()
 {
     this->_map = new cc::Map("2d.tmx", this->_renderer);
-    cc::SpriteTexture::loadTexture("player1", "res/player.png", this->_renderer);
+    cc::SpriteTexture::loadTexture("player1", "res/player.png", this->_renderer, 90, 90, 4, 4);
     this->_player = new cc::Player("player1", _renderer);
 }
 
@@ -96,34 +97,14 @@ void cc::Game::unloadMedia()
 void cc::Game::handleEvents()
 {
     SDL_Event e;
-    int cameraSpeed = 5;
+
     while(SDL_PollEvent(&e) != 0) {
         if(e.type == SDL_QUIT)
             this->_quit = true;
-        else if(e.type == SDL_KEYDOWN) {
-            switch(e.key.keysym.sym) {
-            case SDLK_LEFT:
-                this->moveCamera(cameraSpeed, 0);
-                break;
-            case SDLK_RIGHT:
-                this->moveCamera(-cameraSpeed, 0);
-                break;
-            case SDLK_UP:
-                this->moveCamera(0, cameraSpeed);
-                break;
-            case SDLK_DOWN:
-                this->moveCamera(0, -cameraSpeed);
-                break;
-            case SDLK_LEFTBRACKET:
-                this->scale(1/16.0f);
-                break;
-            case SDLK_RIGHTBRACKET:
-                this->scale(-1/16.0f);
-                break;
-            default:
-                break;
-            }
-        }
+        else if(e.type == SDL_KEYDOWN)
+            this->onKeyDown(e);
+        else if(e.type == SDL_KEYUP)
+            this->onKeyUp(e);
     }
 }
 
@@ -131,7 +112,7 @@ void cc::Game::update()
 {
     float deltaTime = this->_timer.getDeltaTime();
     cc::Object::updateObjects(deltaTime);
-    ++ this->_frame;
+    ++this->_frame;
 }
 
 void cc::Game::render()
@@ -149,6 +130,7 @@ void cc::Game::execute()
         this->handleEvents();
         this->update();
         this->render();
+        // SDL_Delay(10);
     }
 }
 SDL_Window* cc::Game::getWindow()
@@ -174,7 +156,57 @@ void cc::Game::moveCamera(int x, int y)
 void cc::Game::scale(float p)
 {
     float newScaling = this->_camera.getScaling() + p;
-    if(newScaling > 3 || newScaling < 1/8.0f)
+    if(newScaling > 3 || newScaling < 1 / 8.0f)
         return;
     this->_camera.scale(newScaling);
+}
+void cc::Game::onKeyDown(const SDL_Event& e)
+{
+    const int cameraSpeed = 5;
+    switch(e.key.keysym.sym) {
+    case SDLK_LEFT:
+        this->moveCamera(cameraSpeed, 0);
+        break;
+    case SDLK_RIGHT:
+        this->moveCamera(-cameraSpeed, 0);
+        break;
+    case SDLK_UP:
+        this->moveCamera(0, cameraSpeed);
+        break;
+    case SDLK_DOWN:
+        this->moveCamera(0, -cameraSpeed);
+        break;
+    case SDLK_LEFTBRACKET:
+        this->scale(1 / 16.0f);
+        break;
+    case SDLK_RIGHTBRACKET:
+        this->scale(-1 / 16.0f);
+        break;
+    case SDLK_w:
+        this->_player->startMoving(cc::DIR_UP);
+        break;
+    case SDLK_s:
+        this->_player->startMoving(cc::DIR_DOWN);
+        break;
+    case SDLK_a:
+        this->_player->startMoving(cc::DIR_LEFT);
+        break;
+    case SDLK_d:
+        this->_player->startMoving(cc::DIR_RIGHT);
+        break;
+    default:
+        break;
+    }
+}
+
+void cc::Game::onKeyUp(const SDL_Event& e)
+{
+    switch(e.key.keysym.sym) {
+    case SDLK_w:
+    case SDLK_s:
+    case SDLK_a:
+    case SDLK_d:
+    default:
+        break;
+    }
 }

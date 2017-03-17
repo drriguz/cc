@@ -87,5 +87,26 @@ void cc::Object::updateObjects(float deltaTime)
 
 void cc::Object::move(const Point& amount)
 {
-    this->_position  += amount;
+    this->_position += amount;
+}
+cc::Direction cc::Object::getDirection() const
+{
+    float x = this->_direction.getX(), y = this->_direction.getY();
+    if(x < 0 && y == 0)
+        return cc::Direction::LEFT;
+    if(x < 0 && y > 0)
+        return cc::Direction::LEFT_DOWN;
+    if(x < 0 && y < 0)
+        return cc::Direction::LEFT_UP;
+    if(x > 0 && y == 0)
+        return cc::Direction::RIGHT;
+    if(x > 0 && y > 0)
+        return cc::Direction::RIGHT_DOWN;
+    if(x > 0 && y < 0)
+        return cc::Direction::RIGHT_UP;
+    if(x == 0 && y > 0)
+        return cc::Direction::DOWN;
+    if(x == 0 && y < 0)
+        return cc::Direction::UP;
+    return cc::Direction::LEFT;
 }

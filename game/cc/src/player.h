@@ -18,9 +18,15 @@ public:
 
 public:
     virtual void render(const Camera& camera);
+    virtual void update(float deltaTime);
+protected:
+    virtual Sprite* getCurrentSprite();
 
 protected:
     Sprite _movingLeftSprite;
+    Sprite _movingRightSprite;
+    Sprite _movingUpSprite;
+    Sprite _movingDownSprite;
 };
 };
 

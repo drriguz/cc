@@ -10,6 +10,19 @@
 
 namespace cc
 {
+/* ______\|/______
+ *       /|\
+ * */
+enum Direction { LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN };
+const static Point DIR_LEFT(-1.0f, 0.0f);
+const static Point DIR_RIGHT(1.0f, 0.0f);
+const static Point DIR_UP(0.0f, -1.0f);
+const static Point DIR_DOWN(0.0f, 1.0f);
+const static Point DIR_LEFT_UP(-1.0f, -1.0f);
+const static Point DIR_LEFT_DOWN(-1.0f, 1.0f);
+const static Point DIR_RIGHT_UP(1.0f, -1.0f);
+const static Point DIR_RIGHT_DOWN(1.0f, 1.0f);
+
 class Object
 {
 public:
@@ -34,6 +47,7 @@ public:
     virtual void move(const Point& amount);
     virtual void startMoving(const Point& direction);
     virtual void stopMoving();
+    Direction getDirection() const;
 
 protected:
     std::string _name;

@@ -13,15 +13,16 @@ namespace cc
 class Sprite
 {
 public:
-    Sprite(const std::string& name);
+    Sprite(const std::string& name, int groupIndex, int frameCount, int frameInterval);
     ~Sprite();
 
 public:
     void update(float deltaTime);
-    void render(SDL_Renderer* renderer, const Camera& camera, const Point& position);
+    void render(SDL_Renderer* renderer, const Camera& camera, const Point& position, bool animate = true);
 
 protected:
-    SpriteTexture* _texture;    
+    std::string _name;
+    SpriteTexture* _texture;
     int _groupIndex;
     int _currentFrame;
     int _frameCount;

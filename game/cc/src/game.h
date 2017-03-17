@@ -38,6 +38,10 @@ public:
     void render();
     void execute();
 
+private:
+    void onKeyDown(const SDL_Event& e);
+    void onKeyUp(const SDL_Event& e);
+
 public:
     void moveCamera(int x, int y);
     void scale(float p);

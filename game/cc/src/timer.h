@@ -19,7 +19,7 @@ public:
 public:
     float getCurrentMillis()
     {
-        return SDL_GetTicks() / 1000.0f;
+        return SDL_GetTicks();
     }
     float getDeltaTime()
     {
