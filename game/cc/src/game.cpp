@@ -6,7 +6,7 @@
 #include <iostream>
 #include <SDL2/SDL_image.h>
 
-cc::Game::Game(const std::string& name, int width, int height)
+cc::Game::Game(const std::string& name, int width, int height, bool fullScreen)
     : _name(name)
     , _width(width)
     , _height(height)
@@ -15,33 +15,31 @@ cc::Game::Game(const std::string& name, int width, int height)
     , _font(NULL)
     , _quit(false)
     , _camera(Camera(width, height, 1.0f))
+    , _frame(0)
     , _map(NULL)
+    , _player(NULL)
 {
-    this->init();
+    this->init(fullScreen);
     this->loadMedia();
 }
 
 cc::Game::~Game()
 {
     this->deinit();
-    if(this->_map != NULL) {
-        delete this->_map;
-        this->_map = NULL;
-    }
+    this->unloadMedia();
 }
 
-void cc::Game::init()
+void cc::Game::init(bool fullScreen)
 {
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
         throw Exception("Failed to initialize SDL:", SDL_GetError());
     if(!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
         Logger::log("Warning: Linear texture filtering not enabled!");
-    _window = SDL_CreateWindow(this->_name.c_str(),
-                               SDL_WINDOWPOS_UNDEFINED,
-                               SDL_WINDOWPOS_UNDEFINED,
-                               this->_width,
-                               this->_height,
-                               SDL_WINDOW_SHOWN);
+    int windowFlag = SDL_WINDOW_SHOWN;
+    if(fullScreen)
+        windowFlag |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+    _window = SDL_CreateWindow(
+        this->_name.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->_width, this->_height, windowFlag);
     if(_window == NULL)
         throw Exception("Window could not be created:", SDL_GetError());
 
@@ -78,12 +76,21 @@ void cc::Game::deinit()
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();
+    
     cc::Logger::log("Game deinited!");
 }
 
 void cc::Game::loadMedia()
 {
     this->_map = new cc::Map("2d.tmx", this->_renderer);
+    cc::SpriteTexture::loadTexture("player1", "res/player.png", this->_renderer);
+    this->_player = new cc::Player("player1", _renderer);
+}
+
+void cc::Game::unloadMedia()
+{
+    cc::Object::removeAll();
+    cc::SpriteTexture::unloadTextures();
 }
 
 void cc::Game::handleEvents()
@@ -107,6 +114,12 @@ void cc::Game::handleEvents()
             case SDLK_DOWN:
                 this->moveCamera(0, -cameraSpeed);
                 break;
+            case SDLK_LEFTBRACKET:
+                this->scale(1/16.0f);
+                break;
+            case SDLK_RIGHTBRACKET:
+                this->scale(-1/16.0f);
+                break;
             default:
                 break;
             }
@@ -116,6 +129,9 @@ void cc::Game::handleEvents()
 
 void cc::Game::update()
 {
+    float deltaTime = this->_timer.getDeltaTime();
+    cc::Object::updateObjects(deltaTime);
+    ++ this->_frame;
 }
 
 void cc::Game::render()
@@ -154,4 +170,11 @@ const cc::Camera& cc::Game::getCamera() const
 void cc::Game::moveCamera(int x, int y)
 {
     this->_camera.move(Point(x, y));
+}
+void cc::Game::scale(float p)
+{
+    float newScaling = this->_camera.getScaling() + p;
+    if(newScaling > 3 || newScaling < 1/8.0f)
+        return;
+    this->_camera.scale(newScaling);
 }

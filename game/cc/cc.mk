@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=riguz
-Date                   :=15/03/17
+Date                   :=17/03/17
 CodeLitePath           :=/home/riguz/.codelite
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -60,7 +60,7 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_game.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_object.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_map.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_texture.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_game.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_object.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_map.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_texture.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_player.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_sprite.cpp$(ObjectSuffix) 
 
 
 
@@ -130,6 +130,22 @@ $(IntermediateDirectory)/src_texture.cpp$(DependSuffix): src/texture.cpp
 
 $(IntermediateDirectory)/src_texture.cpp$(PreprocessSuffix): src/texture.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_texture.cpp$(PreprocessSuffix) src/texture.cpp
+
+$(IntermediateDirectory)/src_player.cpp$(ObjectSuffix): src/player.cpp $(IntermediateDirectory)/src_player.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/cc/game/cc/src/player.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_player.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_player.cpp$(DependSuffix): src/player.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_player.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_player.cpp$(DependSuffix) -MM src/player.cpp
+
+$(IntermediateDirectory)/src_player.cpp$(PreprocessSuffix): src/player.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_player.cpp$(PreprocessSuffix) src/player.cpp
+
+$(IntermediateDirectory)/src_sprite.cpp$(ObjectSuffix): src/sprite.cpp $(IntermediateDirectory)/src_sprite.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/cc/game/cc/src/sprite.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_sprite.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_sprite.cpp$(DependSuffix): src/sprite.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_sprite.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_sprite.cpp$(DependSuffix) -MM src/sprite.cpp
+
+$(IntermediateDirectory)/src_sprite.cpp$(PreprocessSuffix): src/sprite.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_sprite.cpp$(PreprocessSuffix) src/sprite.cpp
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)

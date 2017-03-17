@@ -16,7 +16,7 @@ class Map : public Object
 {
 public:
     Map(const std::string& path, SDL_Renderer* renderer);
-    ~Map();
+    virtual ~Map();
 
 public:
     virtual void render(const Camera& camera);

@@ -30,6 +30,10 @@ public:
         this->_bound.x = x;
         this->_bound.y = y;
     }
+    void scale(float p)
+    {
+        this->_scaling = p;
+    }
     const SDL_Rect& getBound() const
     {
         return this->_bound;
@@ -63,6 +67,7 @@ public:
         this->_bound.x += delta.getX();
         this->_bound.y += delta.getY();
     }
+
 protected:
     float _width;
     float _height;

@@ -3,6 +3,8 @@
 
 #include "camera.h"
 #include "map.h"
+#include "timer.h"
+#include "player.h"
 
 #include <string>
 #include <SDL2/SDL.h>
@@ -15,13 +17,14 @@ enum GameState { PLAYING, PAUSED, GAMEOVER, READY };
 class Game
 {
 public:
-    Game(const std::string& name, int width, int height);
+    Game(const std::string& name, int width, int height, bool fullScreen = false);
     ~Game();
 
 private:
-    void init();
+    void init(bool fullScreen);
     void deinit();
     void loadMedia();
+    void unloadMedia();
 
 public:
     SDL_Window* getWindow();
@@ -37,6 +40,7 @@ public:
 
 public:
     void moveCamera(int x, int y);
+    void scale(float p);
 
 private:
     std::string _name;
@@ -50,8 +54,11 @@ private:
     bool _quit;
 
     Camera _camera;
+    Timer _timer;
+    int _frame;
 
     Map* _map;
+    Player* _player;
 };
 };
 

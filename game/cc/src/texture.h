@@ -12,12 +12,12 @@ class Texture
 {
 public:
     Texture(SDL_Renderer* renderer);
-    ~Texture();
+    virtual ~Texture();
 
 public:
-    bool loadFromFile(const std::string& path);
-    bool loadFromText(const std::string& text, TTF_Font* font, SDL_Color color);
-    void free();
+    virtual bool loadFromFile(const std::string& path);
+    virtual bool loadFromText(const std::string& text, TTF_Font* font, SDL_Color color);
+    virtual void free();
     void setColor(uint8_t r, uint8_t g, uint8_t b);
     void setBlendMode(SDL_BlendMode blending);
     void setAlpha(uint8_t alpha);

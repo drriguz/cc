@@ -23,6 +23,12 @@
       <File Name="src/texture.h"/>
       <File Name="src/texture.cpp"/>
       <File Name="src/camera.h"/>
+      <File Name="src/sprite.h"/>
+      <File Name="src/player.h"/>
+      <File Name="src/player.cpp"/>
+      <File Name="src/sprite_texture.h"/>
+      <File Name="src/sprite.cpp"/>
+      <File Name="src/timer.h"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <Settings Type="Executable">

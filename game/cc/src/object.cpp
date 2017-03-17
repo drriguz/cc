@@ -8,6 +8,8 @@ cc::Object::Object(const std::string& name, SDL_Renderer* renderer)
     , _dead(false)
     , _speed(0)
     , _position(cc::Point())
+    , _direction(cc::Point(0, 0))
+    , _moving(false)
     , _renderer(renderer)
 {
     cc::Object::objects.push_back(this);
@@ -63,8 +65,27 @@ void cc::Object::remove()
 
 void cc::Object::update(float deltaTime)
 {
+    this->_direction.normalize();
+}
+void cc::Object::startMoving(const Point& direction)
+{
+    this->_direction = direction;
+    this->_moving = true;
+}
+
+void cc::Object::stopMoving()
+{
+    this->_moving = false;
+}
+void cc::Object::updateObjects(float deltaTime)
+{
     for(std::vector<cc::Object*>::iterator iter = objects.begin(); iter != objects.end(); ++iter)
         (*iter)->update(deltaTime);
     applyAdd();
     removeDead();
+}
+
+void cc::Object::move(const Point& amount)
+{
+    this->_position  += amount;
 }

@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
     std::cout << "Ok" << std::endl;
 
     try {
-        cc::Game game("hello", 640, 480);
+        cc::Game game("hello", 800, 600);
         
         game.execute();
     } catch(cc::Exception ex) {
