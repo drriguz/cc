@@ -2,7 +2,7 @@
 #include "logger.h"
 
 cc::Player::Player(const std::string& name, SDL_Renderer* renderer)
-    : cc::Object(name, renderer)
+    : cc::Object(name, renderer, 1.2)
     , _movingLeftSprite(cc::Sprite(name, 1, 4, 200))
     , _movingRightSprite(cc::Sprite(name, 2, 4, 200))
     , _movingUpSprite(cc::Sprite(name, 3, 4, 200))
@@ -22,6 +22,7 @@ void cc::Player::render(const Camera& camera)
 }
 void cc::Player::update(float deltaTime)
 {
+    cc::Object::update(deltaTime);
     cc::Sprite* sprite = this->getCurrentSprite();
     if(sprite != NULL)
         sprite->update(deltaTime);

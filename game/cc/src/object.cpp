@@ -1,13 +1,14 @@
 #include "object.h"
+#include "iostream"
 
 std::vector<cc::Object*> cc::Object::objects;
 std::vector<cc::Object*> cc::Object::addedObjects;
 
-cc::Object::Object(const std::string& name, SDL_Renderer* renderer)
+cc::Object::Object(const std::string& name, SDL_Renderer* renderer, float speed, const Point& position)
     : _name(name)
     , _dead(false)
-    , _speed(0)
-    , _position(cc::Point())
+    , _speed(speed)
+    , _position(position)
     , _direction(cc::Point(0, 0))
     , _moving(false)
     , _renderer(renderer)
@@ -65,17 +66,28 @@ void cc::Object::remove()
 
 void cc::Object::update(float deltaTime)
 {
-    this->_direction.normalize();
+    if(this->_moving) {
+        float deltaTime = this->_timer.getTicks() / 1000.0f;        
+        this->_direction.normalize();
+        cc::Point n = this->_direction;
+        n.setX(n.getX() * this->_speed * deltaTime);
+        n.setY(n.getY() * this->_speed * deltaTime);
+        this->move(n);
+    }
 }
 void cc::Object::startMoving(const Point& direction)
 {
     this->_direction = direction;
-    this->_moving = true;
+    if(!this->_moving) {
+        this->_moving = true;
+        this->_timer.start();
+    }
 }
 
 void cc::Object::stopMoving()
 {
     this->_moving = false;
+    this->_timer.stop();
 }
 void cc::Object::updateObjects(float deltaTime)
 {

@@ -29,6 +29,7 @@
       <File Name="src/sprite_texture.h"/>
       <File Name="src/sprite.cpp"/>
       <File Name="src/timer.h"/>
+      <File Name="src/timer.cpp"/>
     </VirtualDirectory>
   </VirtualDirectory>
   <Settings Type="Executable">

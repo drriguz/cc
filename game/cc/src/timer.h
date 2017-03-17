@@ -2,35 +2,33 @@
 #define _CC_TIMER_H_
 
 #include <SDL2/SDL.h>
+#include <iostream>
+#include <inttypes.h>
 
 namespace cc
 {
 class Timer
 {
 public:
-    Timer()
-        : _lastTime(0.0f)
-    {
-    }
-    ~Timer()
-    {
-    }
+    Timer();
+    ~Timer();
 
 public:
-    float getCurrentMillis()
-    {
-        return SDL_GetTicks();
-    }
-    float getDeltaTime()
-    {
-        float now = getCurrentMillis();
-        float delta = now - this->_lastTime;
-        this->_lastTime = now;
-        return delta;
-    }
+    void start();
+    void stop();
+    void pause();
+    void resume();
+    uint32_t getTicks();
+    bool isStarted();
+    bool isPaused();
+    uint32_t getDeltaTime();
 
 protected:
-    float _lastTime;
+    uint32_t _startTicks;
+    uint32_t _pausedTicks;
+    bool _started;
+    bool _paused;
+    uint32_t _lastTicks;
 };
 };
 

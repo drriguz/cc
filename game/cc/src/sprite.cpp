@@ -27,7 +27,6 @@ cc::Sprite::~Sprite()
 
 void cc::Sprite::update(float deltaTime)
 {
-
     this->_frameTimeRemaining -= deltaTime;
     if(this->_frameTimeRemaining <= 0) {
         ++_currentFrame;
@@ -38,12 +37,16 @@ void cc::Sprite::update(float deltaTime)
 
 void cc::Sprite::render(SDL_Renderer* renderer, const Camera& camera, const Point& position, bool animate)
 {
-    SDL_Rect dest = { 0, 0, 90, 90 };
-    std::cout << animate << std::endl;
+    SDL_Rect dest = {
+        (int)position.getX(), (int)position.getY(), this->_texture->getTileWidth(), this->_texture->getTileHeight()
+    };
+
     int frame = animate ? this->_currentFrame : 0;
+    std::cout << frame << std::endl;
     SDL_Rect src = { this->_texture->getTileWidth() * frame,
                      this->_texture->getTileHeight() * this->_groupIndex,
                      this->_texture->getTileWidth(),
                      this->_texture->getTileHeight() };
+    camera.apply(src, &dest);
     this->_texture->render(src, dest);
 }

@@ -60,7 +60,7 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_game.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_object.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_map.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_texture.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_player.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_sprite.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_game.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_object.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_map.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_texture.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_player.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_sprite.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_timer.cpp$(ObjectSuffix) 
 
 
 
@@ -146,6 +146,14 @@ $(IntermediateDirectory)/src_sprite.cpp$(DependSuffix): src/sprite.cpp
 
 $(IntermediateDirectory)/src_sprite.cpp$(PreprocessSuffix): src/sprite.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_sprite.cpp$(PreprocessSuffix) src/sprite.cpp
+
+$(IntermediateDirectory)/src_timer.cpp$(ObjectSuffix): src/timer.cpp $(IntermediateDirectory)/src_timer.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/riguz/workspace/cc/game/cc/src/timer.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_timer.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_timer.cpp$(DependSuffix): src/timer.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_timer.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_timer.cpp$(DependSuffix) -MM src/timer.cpp
+
+$(IntermediateDirectory)/src_timer.cpp$(PreprocessSuffix): src/timer.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_timer.cpp$(PreprocessSuffix) src/timer.cpp
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)

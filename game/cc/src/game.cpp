@@ -21,6 +21,7 @@ cc::Game::Game(const std::string& name, int width, int height, bool fullScreen)
 {
     this->init(fullScreen);
     this->loadMedia();
+    this->_timer.start();
 }
 
 cc::Game::~Game()
@@ -86,6 +87,7 @@ void cc::Game::loadMedia()
     this->_map = new cc::Map("2d.tmx", this->_renderer);
     cc::SpriteTexture::loadTexture("player1", "res/player.png", this->_renderer, 90, 90, 4, 4);
     this->_player = new cc::Player("player1", _renderer);
+    this->_player->moveTo(cc::Point(100, 100));
 }
 
 void cc::Game::unloadMedia()
@@ -110,7 +112,7 @@ void cc::Game::handleEvents()
 
 void cc::Game::update()
 {
-    float deltaTime = this->_timer.getDeltaTime();
+    int deltaTime = this->_timer.getDeltaTime();
     cc::Object::updateObjects(deltaTime);
     ++this->_frame;
 }
@@ -206,6 +208,8 @@ void cc::Game::onKeyUp(const SDL_Event& e)
     case SDLK_s:
     case SDLK_a:
     case SDLK_d:
+        this->_player->stopMoving();
+        break;
     default:
         break;
     }

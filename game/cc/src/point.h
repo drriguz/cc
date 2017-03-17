@@ -45,6 +45,13 @@ public:
         p._y = _y + v._y;
         return p;
     }
+    Point operator*(const Point& v)
+    {
+        Point p;
+        p._x = _x * v._x;
+        p._y = _y * v._y;
+        return p;
+    }
     void operator=(const Point& v)
     {
         _x = v._x;
@@ -74,5 +81,6 @@ protected:
     float _x;
     float _y;
 };
+
 };
 #endif

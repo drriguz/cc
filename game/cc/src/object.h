@@ -7,6 +7,7 @@
 
 #include "point.h"
 #include "camera.h"
+#include "timer.h"
 
 namespace cc
 {
@@ -26,7 +27,10 @@ const static Point DIR_RIGHT_DOWN(1.0f, 1.0f);
 class Object
 {
 public:
-    Object(const std::string& name, SDL_Renderer* renderer);
+    Object(const std::string& name,
+           SDL_Renderer* renderer,
+           float speed = 0.0f,
+           const Point& position = Point(0.0f, 0.0f));
     virtual ~Object();
 
 public:
@@ -45,9 +49,25 @@ public:
 
 public:
     virtual void move(const Point& amount);
+    virtual void moveTo(const Point& position)
+    {
+        this->_position = position;
+    }
     virtual void startMoving(const Point& direction);
     virtual void stopMoving();
     Direction getDirection() const;
+    Point getPosition() const
+    {
+        return this->_position;
+    }
+    float getSpeen() const
+    {
+        return this->_speed;
+    }
+    bool isDead() const
+    {
+        return _dead;
+    }
 
 protected:
     std::string _name;
@@ -58,6 +78,7 @@ protected:
     bool _moving;
 
     SDL_Renderer* _renderer;
+    Timer _timer;
 };
 };
 #endif
