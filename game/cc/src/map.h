@@ -26,7 +26,7 @@ protected:
     void loadMedia();
     void drawLayer(Tmx::Layer* layer, const Camera& camera);
     void drawTileLayer(Tmx::TileLayer* layer, const Camera& camera);
-
+    void drawGrid(const cc::Camera& camera);
 protected:
     std::string _path;
     Tmx::Map _map;

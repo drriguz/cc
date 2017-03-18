@@ -62,6 +62,11 @@ public:
         dest->y = (dest->y - this->_bound.y) * this->_scaling;
     }
 
+    void apply(Point* point) const
+    {
+        point->setX((point->getX() - this->_bound.x) * this->_scaling);
+        point->setY((point->getY() - this->_bound.y) * this->_scaling);
+    }
     void move(const Point& delta)
     {
         this->_bound.x += delta.getX();

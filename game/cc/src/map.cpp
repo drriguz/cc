@@ -43,6 +43,7 @@ void cc::Map::render(const cc::Camera& camera)
         if(layer->IsVisible())
             this->drawLayer(layer, camera);
     }
+    this->drawGrid(camera);
 }
 void cc::Map::drawLayer(Tmx::Layer* layer, const cc::Camera& camera)
 {
@@ -77,16 +78,11 @@ void cc::Map::drawTileLayer(Tmx::TileLayer* layer, const cc::Camera& camera)
                 destRect.y -= tileset->GetTileOffset()->GetY();
 
                 camera.apply(srcRect, &destRect);
+
                 texture->render(srcRect, destRect);
             }
         }
     }
-    SDL_RenderDrawLine(this->_renderer, 64, 0, 0, 32);
-    SDL_RenderDrawLine(this->_renderer, 64, 0, 128, 32);
-    SDL_RenderDrawLine(this->_renderer, 64, 64, 0, 32);
-    SDL_RenderDrawLine(this->_renderer, 64, 64, 128, 32);
-    SDL_RenderDrawLine(this->_renderer, 32, 16, 96, 48);
-    SDL_RenderDrawLine(this->_renderer, 32, 48, 96, 16);
 }
 cc::Point cc::Map::projection(int x, int y)
 {
@@ -106,4 +102,32 @@ cc::Point cc::Map::projection(int x, int y)
         p.setY(this->_map.GetTileHeight() * y);
     }
     return p;
+}
+void cc::Map::drawGrid(const cc::Camera& camera)
+{
+    int mapOffset = (this->_map.GetTileWidth() / 2.0f) * (_map.GetHeight()) / 2;
+    float tileOffset = this->_map.GetTileWidth() / 2.0f;
+    int offset = tileOffset;
+    if(this->_map.GetOrientation() == Tmx::MapOrientation::TMX_MO_ISOMETRIC)
+        offset += mapOffset;
+    for(int x = 0; x <= this->_map.GetWidth(); x++) {
+        Point p1 = this->projection(x, 0);
+        Point p2 = this->projection(x, _map.GetHeight());
+
+        p1.setX(p1.getX() + offset);
+        p2.setX(p2.getX() + offset);
+        camera.apply(&p1);
+        camera.apply(&p2);
+        SDL_RenderDrawLine(this->_renderer, p1.getX(), p1.getY(), p2.getX(), p2.getY());
+    }
+    for(int y = 0; y <= _map.GetHeight(); y++) {
+        Point p1 = this->projection(0, y);
+        Point p2 = this->projection(_map.GetWidth(), y);
+
+        p1.setX(p1.getX() + offset);
+        p2.setX(p2.getX() + offset);
+        camera.apply(&p1);
+        camera.apply(&p2);
+        SDL_RenderDrawLine(this->_renderer, p1.getX(), p1.getY(), p2.getX(), p2.getY());
+    }
 }
