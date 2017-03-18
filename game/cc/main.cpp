@@ -7,7 +7,7 @@
 int main(int argc, char* argv[])
 {
     Tmx::Map map;
-    map.ParseFile("../maps/2d-simple.tmx");
+    map.ParseFile("../maps/2.5d-simple.tmx");
     if(map.HasError()) {
         std::cerr << "Failed to open map:" << map.GetErrorText().c_str() << std::endl;
         return map.GetErrorCode();

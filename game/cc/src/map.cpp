@@ -5,6 +5,7 @@
 cc::Map::Map(const std::string& path, SDL_Renderer* renderer)
     : cc::Object("", renderer)
     , _path(path)
+    , _showGrid(false)
 {
     this->_map.ParseFile(this->_path);
     if(this->_map.HasError())
@@ -51,6 +52,7 @@ void cc::Map::drawLayer(Tmx::Layer* layer, const cc::Camera& camera)
 void cc::Map::drawTileLayer(Tmx::TileLayer* layer, const cc::Camera& camera)
 {
     SDL_Rect srcRect, destRect;
+    int offset = (this->_map.GetTileWidth() / 2.0f) * (_map.GetHeight()) / 2;
     for(int x = 0; x < layer->GetWidth(); x++) {
         for(int y = 0; y < layer->GetHeight(); y++) {
             Tmx::MapTile tile = layer->GetTile(x, y);
@@ -65,11 +67,43 @@ void cc::Map::drawTileLayer(Tmx::TileLayer* layer, const cc::Camera& camera)
                 srcRect.y = tileset->GetTileHeight() * tileY;
                 srcRect.w = tileset->GetTileWidth();
                 srcRect.h = tileset->GetTileHeight();
-                destRect.x = this->_map.GetTileWidth() * x;
-                destRect.y = this->_map.GetTileHeight() * y;
+                Point p = this->projection(x, y);
+                destRect.x = p.getX();
+                destRect.y = p.getY();
+                if(this->_map.GetOrientation() == Tmx::MapOrientation::TMX_MO_ISOMETRIC)
+                    destRect.x += offset;
+
+                destRect.x -= tileset->GetTileOffset()->GetX();
+                destRect.y -= tileset->GetTileOffset()->GetY();
+
                 camera.apply(srcRect, &destRect);
                 texture->render(srcRect, destRect);
             }
         }
     }
+    SDL_RenderDrawLine(this->_renderer, 64, 0, 0, 32);
+    SDL_RenderDrawLine(this->_renderer, 64, 0, 128, 32);
+    SDL_RenderDrawLine(this->_renderer, 64, 64, 0, 32);
+    SDL_RenderDrawLine(this->_renderer, 64, 64, 128, 32);
+    SDL_RenderDrawLine(this->_renderer, 32, 16, 96, 48);
+    SDL_RenderDrawLine(this->_renderer, 32, 48, 96, 16);
+}
+cc::Point cc::Map::projection(int x, int y)
+{
+    Point p;
+    if(this->_map.GetOrientation() == Tmx::MapOrientation::TMX_MO_ISOMETRIC) {
+        // isometric
+        // x = (tile_width /2)*(i-j)
+        // y = (tile_height/2)*(i+j)
+        // i = 0.5*(y/(tile_height/2)+x/(tile_width/2))
+        // j = 0.5*(y/(tile_height/2)-x/(tile_width/2))
+
+        p.setX((this->_map.GetTileWidth() / 2.0f) * (x - y));
+        p.setY((this->_map.GetTileHeight() / 2.0f) * (x + y));
+    }
+    if(this->_map.GetOrientation() == Tmx::MapOrientation::TMX_MO_ORTHOGONAL) {
+        p.setX(this->_map.GetTileWidth() * x);
+        p.setY(this->_map.GetTileHeight() * y);
+    }
+    return p;
 }

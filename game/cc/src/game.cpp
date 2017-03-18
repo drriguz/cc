@@ -84,7 +84,7 @@ void cc::Game::deinit()
 
 void cc::Game::loadMedia()
 {
-    this->_map = new cc::Map("2d.tmx", this->_renderer);
+    this->_map = new cc::Map("2.5d-4x4.tmx", this->_renderer);
     cc::SpriteTexture::loadTexture("player1", "res/player.png", this->_renderer, 90, 90, 4, 4);
     this->_player = new cc::Player("player1", _renderer);
     this->_player->moveTo(cc::Point(100, 100));
@@ -119,9 +119,9 @@ void cc::Game::update()
 
 void cc::Game::render()
 {
-    SDL_SetRenderDrawColor(this->_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_SetRenderDrawColor(this->_renderer, 0x00, 0x00, 0x00, 0xFF);
     SDL_RenderClear(this->_renderer);
-
+    SDL_SetRenderDrawColor(this->_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
     cc::Object::renderObjects(this->_camera);
     SDL_RenderPresent(this->_renderer);
 }
