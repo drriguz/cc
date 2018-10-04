@@ -84,7 +84,7 @@ void cc::Game::deinit()
 
 void cc::Game::loadMedia()
 {
-    this->_map = new cc::Map("2.5d-4x4.tmx", this->_renderer);
+    this->_map = new cc::Map("2.5d-large.tmx", this->_renderer);
     cc::SpriteTexture::loadTexture("player1", "res/player.png", this->_renderer, 90, 90, 4, 4);
     this->_player = new cc::Player("player1", _renderer);
     this->_player->moveTo(cc::Point(100, 100));

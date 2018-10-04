@@ -110,6 +110,7 @@ void cc::Map::drawGrid(const cc::Camera& camera)
     int offset = tileOffset;
     if(this->_map.GetOrientation() == Tmx::MapOrientation::TMX_MO_ISOMETRIC)
         offset += mapOffset;
+    SDL_SetRenderDrawColor(this->_renderer, 0x5E, 0x00, 0x00, 0x11);
     for(int x = 0; x <= this->_map.GetWidth(); x++) {
         Point p1 = this->projection(x, 0);
         Point p2 = this->projection(x, _map.GetHeight());
