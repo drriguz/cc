@@ -24,8 +24,15 @@ jobs:
           libsdl2-image-dev \
           libsdl2-ttf-dev \
           libsdl2-mixer-dev \
-          libtmx-dev \
-          pkg-config
+          pkg-config \
+          cmake \
+          libxml2-dev \
+          zlib1g-dev
+        # Build tmx from source
+        git clone https://github.com/baylej/tmx.git /tmp/tmx
+        cd /tmp/tmx && mkdir build && cd build
+        cmake .. -DCMAKE_INSTALL_PREFIX=/usr
+        make && sudo make install
 
     - name: Install dependencies (macOS)
       if: runner.os == 'macOS'
