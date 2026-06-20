@@ -1,11 +1,25 @@
-#Debug and Release
-Debug
-Release
-.codelite
+# Build directories
+build/
+Debug/
+Release/
+cmake-build-*/
 
-#Vs files
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# IDE
+.codelite/
+.vscode/
+.idea/
 *.opensdf
 *.sdf
 
-#other files
+# Compiled objects
+*.o
+*.d
+
+# Other
 *.log
